@@ -47,7 +47,7 @@ function LogicSim()
 		this.canvas = document.getElementById("canvas");
 		this.context = this.canvas.getContext("2d");
 		
-		this.toolbar = new Toolbar();
+		this.toolbar = new Toolbar(256);
 		var grp = this.toolbar.addGroup("Tools");
 		grp.addItem(new Button.Tool(images.newfile, function() {
 			if (confirm("Are you sure you want to delete all existing gates, "
@@ -227,7 +227,7 @@ function LogicSim()
 	{
 		myIsDragging = false;
 
-		if (this.getDraggedPosition().x >= 256) {
+		if (this.getDraggedPosition().x >= this.toolbar.width) {
 			if (myCanPlace) {
 				this.tryMerge(mySelection, this.getDraggedPosition(), true);
 			} else {
@@ -358,7 +358,7 @@ function LogicSim()
 
 		var canSelect = this.mode == ControlMode.selecting;
 
-		if (x < 256) {
+		if (x < this.toolbar.width) {
 			this.toolbar.mouseDown(x, y);
 		} else {
 			var pos = new Pos(x, y);
@@ -453,7 +453,7 @@ function LogicSim()
 					wire.selected = true;
 				}
 			}
-		} else if (x < 256) {
+		} else if (x < this.toolbar.width) {
 			this.toolbar.mouseUp(x, y);
 		} else {
 			var pos = new Pos(x, y);
@@ -510,7 +510,7 @@ function LogicSim()
 		if (e.shiftKey) this.setMode(ControlMode.selecting);
 		else if (this.mode == ControlMode.selecting) this.setMode(ControlMode.wiring);
 		
-		if (x < 256) {
+		if (x < this.toolbar.width) {
 			this.toolbar.click(x, y);
 		}
 	}
@@ -580,7 +580,7 @@ function LogicSim()
 		}
 
 		self.context.fillStyle = self.context.createPattern(myGridImage, "repeat");
-		self.context.fillRect(256, 0, self.canvas.width - 256, self.canvas.height);
+		self.context.fillRect(self.toolbar.width, 0, self.canvas.width - self.toolbar.width, self.canvas.height);
 		
 		self.render(self.context);
 		

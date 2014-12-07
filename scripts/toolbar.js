@@ -1,4 +1,14 @@
-function Toolbar()
+ToolbarDefault = {
+	width:256,
+	opened: true	
+}
+
+ToolbarGroupDefault = {
+	padding : 16,
+	minItemWidth: 80
+}
+
+function Toolbar(width, opened)
 {
 	this.sepimage = new Object();
 	this.sepimage.end = images.sepend;
@@ -8,8 +18,8 @@ function Toolbar()
 	this.arrimage.down = images.arrdown;
 	this.arrimage.up = images.arrup;
 
-	this.width = 256;
-	this.isOpen = true;
+	this.width = width || ToolbarDefault.width;
+	this.isOpen = (typeof opened !== 'undefined') ? opened : ToolbarDefault.opened;
 	
 	this.groups = new Array();
 	
@@ -18,7 +28,7 @@ function Toolbar()
 		var group = new ToolbarGroup(this, name);
 		this.groups.push(group);
 
-		if (hide) group.isOpen = false;
+		if (hide || !this.isOpen) group.isOpen = false;
 
 		return group;
 	}
@@ -105,8 +115,8 @@ function ToolbarGroup(toolbar, name)
 	this.items = new Array();
 	this.buttons = new Array();
 	
-	this.padding = 16;
-	this.minItemWidth = 80;
+	this.padding = ToolbarGroupDefault.padding;
+	this.minItemWidth = ToolbarGroupDefault.minItemWidth;
 	
 	this.y = 0;
 	
