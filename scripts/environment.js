@@ -175,11 +175,17 @@ function Environment()
         }
     }
     
+	/*this.canPlaceRect = function(rect) {
+		if (this.toolbar)
+			return (rect.x >= this.toolbar.width);
+		return (rect.x >= 256);
+	}*/
+	
     this.canPlaceGate = function(gate)
     {
         var rect = gate.getRect();
 
-        if (rect.x < 256) return false;
+        //if (!this.canPlaceRect(rect)) return false;
         
         for (var i = 0; i < this.gates.length; ++i) {
             var other = this.gates[i].getRect();
@@ -303,7 +309,7 @@ function Environment()
     {
         var input = null;
 
-        if (wire.start.x < 256) return false;
+        //if (!this.canPlaceRect(wire.start)) return false;
         
         for (var i = 0; i < this.wireGroups.length; ++ i) {
             var group = this.wireGroups[i];
